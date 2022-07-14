@@ -2,7 +2,10 @@
 
 #include "test.h"
 
+Base::~Base() {}
+
 Derived::Derived() {}
+Derived::~Derived() {}
 
 //void Derived::f() {}
 
