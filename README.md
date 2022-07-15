@@ -1,3 +1,25 @@
+**additional comments by rschatz**
+
+Playing around with this a bit more, there are a few weird things here.
+
+I added a `main.c` file, so we can test without GraalVM.
+This main file does essentially the same thing as the `tester.java` file, but loading the libraries with regular `dlopen`/`dlsym` instead of the GraalVM APIs.
+
+I have added makefiles that builds the test in multiple variants:
+
+* managed
+    The original test, compiled for the GraalVM LLVM runtime in managed mode.
+* native
+    Building the same test with the GraalVM shipped LLVM toolchain, but in native mode, so we can run it also outside of GraalVM.
+* gcc
+    For comparison, building the same thing just with gcc.
+
+I modified the `run.sh` so it runs all of those variants.
+
+Both the `Makefile` and `run.sh` expect the `GRAALVM_HOME` env variable to point to a GraalVM EE with the LLVM toolchain installed.
+
+
+
 **Describe the issue**
 The C++ `dynamic_cast` only works if the `dynamic_cast` is called from the same shared library that has the definition of `Base` class and `Derived` class. (all the code are located in the same shared
 library).  On the other hand, if the `dynamic_cast` is called from another shared library (during linking process, this share library links the library with the real definition of classes),
