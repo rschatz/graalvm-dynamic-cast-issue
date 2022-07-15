@@ -1,0 +1,11 @@
+.PHONY:: default
+default: main libtest.so libtest2.so
+
+libtest2.so: libtest.so
+libtest2.so: LDFLAGS=-L. -Wl,--rpath,. -ltest
+
+lib%.so: ../%.cpp
+	${CXX} -frtti -fPIC -shared ${LDFLAGS} $< -o $@
+
+main: ../main.c
+	${CC} $< -o $@
