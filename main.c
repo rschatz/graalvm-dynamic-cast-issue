@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main() {
-    void *libtest = dlopen("./libtest.so", RTLD_LAZY);
+    void *libtest = dlopen("./libtest.so", RTLD_LAZY|RTLD_GLOBAL);
     if (!libtest) {
         printf("libtest.so: %s\n", dlerror());
         return 1;
@@ -11,7 +11,7 @@ int main() {
     void (*test)() = dlsym(libtest, "test");
     test();
 
-    void *libtest2 = dlopen("./libtest2.so", RTLD_LAZY);
+    void *libtest2 = dlopen("./libtest2.so", RTLD_LAZY|RTLD_GLOBAL);
     if (!libtest2) {
         printf("libtest2.so: %s\n", dlerror());
         return 1;
